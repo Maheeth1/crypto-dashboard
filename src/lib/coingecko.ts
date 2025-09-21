@@ -34,4 +34,13 @@ export const fetchMarketData = async (page = 1, perPage = 50): Promise<Coin[]> =
   }
 };
 
-// We will add a function for trending coins here later for the Highlights section.
+export const fetchTrendingCoins = async (): Promise<any[]> => {
+  try {
+    const response = await apiClient.get('/search/trending');
+    // The trending endpoint has a different structure
+    return response.data.coins; 
+  } catch (error) {
+    console.error("Error fetching trending coins:", error);
+    throw error;
+  }
+};
