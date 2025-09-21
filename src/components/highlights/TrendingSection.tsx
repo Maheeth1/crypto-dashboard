@@ -1,21 +1,41 @@
 import React from 'react';
 import { useTrendingCoins } from '@/hooks/useCoinData';
+import type { Coin, TrendingCoin } from '@/types';
 import { HighlightCard } from './HighlightCard';
+import { formatCurrency } from '@/lib/utils';
 
-export const TrendingSection = () => {
+interface TrendingSectionProps {
+  coins: Coin[] | undefined;
+  currency: string; 
+}
+
+export const TrendingSection: React.FC<TrendingSectionProps> = ({ coins, currency}) => {
   const { data: trendingCoins, isLoading, isError } = useTrendingCoins();
 
+  const trendingCoinsData = trendingCoins
+    ?.map((trendingCoin: TrendingCoin) => 
+      coins?.find((c: Coin) => c.id === trendingCoin.item.id)
+    )
+    .filter((coin): coin is Coin => coin !== undefined) 
+    .slice(0, 8);
+
   return (
-    <HighlightCard title="🔥 Trending">
+    <HighlightCard 
+      title="🔥 Trending"
+      headers={['Coin', 'Price', 'Rank']}
+      moreLink="#"
+    >
       {isLoading && <p className="text-gray-400">Loading...</p>}
       {isError && <p className="text-red-400">Could not load trending coins.</p>}
-      {trendingCoins?.map((coin: any, index: number) => (
-        <div key={coin.item.id} className="flex items-center justify-between text-sm">
-          <div className="flex items-center gap-2">
-            <img src={coin.item.thumb} alt={coin.item.name} className="w-5 h-5 rounded-full" />
-            <span>{coin.item.name} ({coin.item.symbol})</span>
+      
+      {trendingCoinsData?.map((coin) => (
+        <div key={coin.id} className="grid grid-cols-3 items-center text-sm">
+          <div className="flex items-center gap-2 truncate col-span-1">
+            <img src={coin.image} alt={coin.name} className="w-5 h-5 rounded-full" />
+            <span>{coin.name} ({coin.symbol})</span>
           </div>
-          <span className="font-semibold">#{coin.item.market_cap_rank}</span>
+          <span className="text-right col-span-1">{formatCurrency(coin.price, currency)}</span>
+          <span className="font-semibold text-right col-span-1">#{coin.rank}</span>
         </div>
       ))}
     </HighlightCard>

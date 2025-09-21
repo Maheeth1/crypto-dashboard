@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { fetchMarketData, fetchTrendingCoins } from '@/lib/coingecko';
 
-export const useMarketData = (page: number) => {
+export const useMarketData = (page: number, currency: string) => {
   return useQuery({
-    queryKey: ['marketData', page],
-    queryFn: () => fetchMarketData(page),   
+    queryKey: ['marketData', page, currency],
+    queryFn: () => fetchMarketData(page, currency),   
     staleTime: 60 * 1000, // 1 minute
   });
 };

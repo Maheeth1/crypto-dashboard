@@ -9,6 +9,7 @@ export interface Coin {
   priceChangePercentage24h: number;
   marketCap: number;
   volume24h: number;
+  athChangePercentage: number;
 }
 
 export interface TrendingCoin {

@@ -4,9 +4,10 @@ import { CoinTableRow } from './CoinTableRow';
 
 interface CoinTableProps {
   coins: Coin[];
+  currency: string;
 }
 
-export const CoinTable: React.FC<CoinTableProps> = ({ coins }) => {
+export const CoinTable: React.FC<CoinTableProps> = ({ coins, currency }) => {
   if (coins.length === 0) {
     return <div className="text-center p-8 text-gray-400">No coins found.</div>;
   }
@@ -26,7 +27,7 @@ export const CoinTable: React.FC<CoinTableProps> = ({ coins }) => {
         </thead>
         <tbody>
           {coins.map((coin) => (
-            <CoinTableRow key={coin.id} coin={coin} />
+            <CoinTableRow key={coin.id} coin={coin} currency={currency} />
           ))}
         </tbody>
       </table>

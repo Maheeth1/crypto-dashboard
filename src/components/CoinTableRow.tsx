@@ -4,9 +4,10 @@ import { formatCurrency, formatLargeNumber } from '@/lib/utils';
 
 interface CoinTableRowProps {
   coin: Coin;
+  currency: string;
 }
 
-export const CoinTableRow: React.FC<CoinTableRowProps> = ({ coin }) => {
+export const CoinTableRow: React.FC<CoinTableRowProps> = ({ coin, currency }) => {
   const isPositive = coin.priceChangePercentage24h >= 0;
 
   return (
@@ -19,9 +20,9 @@ export const CoinTableRow: React.FC<CoinTableRowProps> = ({ coin }) => {
           <p className="text-gray-400 text-sm">{coin.symbol}</p>
         </div>
       </td>
-      <td className="p-4 text-right">{formatCurrency(coin.price)}</td>
+      <td className="p-4 text-right">{formatCurrency(coin.price, currency)}</td>
       <td className={`p-4 text-right ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
-        {coin.priceChangePercentage24h.toFixed(2)}%
+        {(coin.priceChangePercentage24h || 0).toFixed(2)}%
       </td>
       <td className="p-4 text-right hidden md:table-cell">{formatLargeNumber(coin.marketCap)}</td>
       <td className="p-4 text-right hidden lg:table-cell">{formatLargeNumber(coin.volume24h)}</td>
