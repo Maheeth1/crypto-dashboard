@@ -1,18 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchMarketData, fetchTrendingCoins } from '@/lib/coingecko';
+import { fetchMarketData } from '@/lib/coingecko';
 
-export const useCoinData = () => {
-  // Query for the main market data (paginated, etc.)
-  const marketQuery = useQuery({
-    queryKey: ['marketData'], // This would typically include a page number, e.g., ['marketData', page]
-    queryFn: () => fetchMarketData(1), // Fetch the first page for now
+export const useMarketData = (page: number) => {
+  return useQuery({
+    // The query key is an array that uniquely identifies this query.
+    // When `page` changes, React Query will automatically refetch the data.
+    queryKey: ['marketData', page],
+    
+    // The query function is the async function that fetches the data.
+    queryFn: () => fetchMarketData(page),
+    
+    // Optional: Keep data fresh but avoid excessive refetching.
+    // Data is considered "stale" after 60 seconds.
+    staleTime: 60 * 1000, // 1 minute
   });
-
-  // Query for the trending coins data
-  const trendingQuery = useQuery({
-    queryKey: ['trendingCoins'],
-    queryFn: fetchTrendingCoins,
-  });
-
-  return { marketQuery, trendingQuery };
 };

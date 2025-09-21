@@ -1,29 +1,37 @@
 import apiClient from './apiClient';
-import type { Coin, TrendingApiResponse } from '@/types';
+import type { Coin } from '@/types'; // Vite is often pre-configured with '@/' as an alias for 'src/'
 
-// This function adapts the API response to our internal Coin type
-export const fetchMarketData = async (page = 1): Promise<Coin[]> => {
-  const response = await apiClient.get('/coins/markets', {
-    params: { vs_currency: 'usd', page, per_page: 50 },
-  });
-  // Map the raw data to our clean `Coin` interface
-  return response.data.map((rawCoin: any) => ({
-    id: rawCoin.id,
-    rank: rawCoin.market_cap_rank,
-    symbol: rawCoin.symbol.toUpperCase(),
-    name: rawCoin.name,
-    image: rawCoin.image,
-    price: rawCoin.current_price,
-    priceChange24h: rawCoin.price_change_24h,
-    priceChangePercentage24h: rawCoin.price_change_percentage_24h,
-    marketCap: rawCoin.market_cap,
-    volume24h: rawCoin.total_volume,
-  }));
+export const fetchMarketData = async (page = 1, perPage = 50): Promise<Coin[]> => {
+  try {
+    const response = await apiClient.get('/coins/markets', {
+      params: {
+        vs_currency: 'usd',
+        order: 'market_cap_desc',
+        per_page: perPage,
+        page: page,
+        sparkline: false,
+      },
+    });
+
+    // Map the raw API data to our clean `Coin` interface
+    const adaptedData: Coin[] = response.data.map((rawCoin: any) => ({
+      id: rawCoin.id,
+      rank: rawCoin.market_cap_rank,
+      symbol: rawCoin.symbol.toUpperCase(),
+      name: rawCoin.name,
+      image: rawCoin.image,
+      price: rawCoin.current_price,
+      priceChangePercentage24h: rawCoin.price_change_percentage_24h,
+      marketCap: rawCoin.market_cap,
+      volume24h: rawCoin.total_volume,
+    }));
+
+    return adaptedData;
+  } catch (error) {
+    console.error("Error fetching market data:", error);
+    // Re-throw the error to be handled by React Query
+    throw error;
+  }
 };
 
-export const fetchTrendingCoins = async (): Promise<TrendingApiResponse['coins']> => {
-  const response = await apiClient.get<TrendingApiResponse>('/search/trending');
-  
-  // The API returns a { coins: [...] } object, we just return the array
-  return response.data.coins;
-};
+// We will add a function for trending coins here later for the Highlights section.
