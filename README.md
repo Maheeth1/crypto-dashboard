@@ -2,32 +2,75 @@
 
 **CryptoDash** is a responsive, feature-rich web application that provides live cryptocurrency market data, built as a response to a take-home development assignment. It features a detailed "All Coins" overview with advanced data points and a comprehensive "Highlights" section. The project emphasizes clean code, modern design patterns, and a polished user experience with features like theme switching and client-side routing.
 
-**Live Application Link:** [**Add your Vercel deployment link here**]
+**Live Application Link:** [**https://crypto-dashboard-six-eta.vercel.app/**]
 
 ---
 
 ## Final Application Screenshots
 
-#### All Coins View (with Dark Mode)
-![Screenshot of the All Coins View](./public/screenshots/all-coins-view-dark.png)
+#### All Coins View (with Light Mode)
+![Screenshot of the All Coins View](./src/assets/all-coins.png)
 
-#### Highlights View (with Light Mode)
-![Screenshot of the Highlights View](./public/screenshots/highlights-view-light.png)
+#### Highlights View (with Dark Mode)
+![Screenshot of the Highlights View](./src/assets/highlights.png)
 
 ---
 
-## 1. Assignment Overview & Goal
+## 1. Setup and Installation Instructions
 
-This project was built to fulfill the requirements of the development assignment provided. The primary goal was to build a small, production-like crypto dashboard that fetches live market data from the CoinGecko API.
+To get a local copy up and running, please follow these simple steps.
 
-> #### **Original Assignment Goal:**
->
-> *Build a small, production-like crypto dashboard that fetches live market data from the CoinGecko API and displays:*
->
-> -   *All coins overview*
-> -   *A Highlights section*
->
-> *The assignment tests your ability to design, implement, and ship a clean, maintainable, and well-documented codebase with appropriate use of design patterns.*
+### Prerequisites
+
+-   Node.js (v18 or later recommended)
+-   npm (or yarn/pnpm)
+
+### Installation & Setup
+
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/Maheeth1/crypto-dashboard.git](https://github.com/Maheeth1/crypto-dashboard.git)
+    cd crypto-dashboard
+    ```
+
+2.  **Install NPM packages:**
+    ```bash
+    npm install
+    ```
+
+3.  **Set up Environment Variables (API Key):**
+    This project requires a free API key from CoinGecko to fetch market data.
+    -   Create an account and get your key from the [CoinGecko API Documentation](https://www.coingecko.com/en/api/documentation).
+    -   In the root of the project, create a new file named `.env.local`.
+    -   Copy the contents from the `.env.example` file into your new `.env.local` file.
+    -   Replace the placeholder with your actual API key:
+        ```env
+        # .env.local
+        VITE_COINGECKO_API_KEY=your_coingecko_api_key_here
+        VITE_COINGECKO_API_URL=[https://api.coingecko.com/api/v3](https://api.coingecko.com/api/v3)
+        ```
+    > **Note:** The `.env.local` file is listed in `.gitignore` and will never be committed to the repository.
+
+4.  **Run the Development Server:**
+    ```bash
+    npm run dev
+    ```
+    The application will now be running on `http://localhost:5173` (or the next available port).
+
+---
+
+## 2. Tech Stack and Architecture Overview
+
+The architecture was designed for scalability, maintainability, and a clean separation of concerns.
+
+-   **Framework**: **React 18** (via **Vite**) was chosen for its fast development environment and robust ecosystem.
+-   **Language**: **TypeScript** is used throughout the project to ensure type safety, reduce runtime errors, and improve code quality and maintainability.
+-   **Routing**: **React Router DOM** provides seamless client-side routing, enabling a multi-page feel within a Single-Page Application (SPA) and allowing for deep linking.
+-   **Styling**: **Tailwind CSS** is used for its utility-first approach, enabling rapid development of a consistent, responsive, and easily themeable UI without writing custom CSS.
+-   **Data Fetching & State Management**: **TanStack Query (React Query)** is the cornerstone of the data layer. It manages all server state, handling caching, background refetching, and error states declaratively, which significantly simplifies component logic.
+-   **API Client**: **Axios** provides a simple and consistent interface for making HTTP requests to the CoinGecko API.
+
+The project is structured into logical folders (`components`, `hooks`, `lib`, `context`, `views`) to keep the codebase organized and easy to navigate.
 
 ---
 
@@ -57,60 +100,39 @@ This project successfully implements all core requirements and includes addition
 
 ---
 
-## 3. Tech Stack & Architecture
+## 3. Design Patterns Used and Rationale
 
--   **Framework**: **React 18** with **Vite** for a fast and modern development experience.
--   **Language**: **TypeScript** for robust type safety.
--   **Routing**: **React Router DOM** for client-side navigation.
--   **Styling**: **Tailwind CSS** with a class-based strategy for theming.
--   **Data Fetching & State Management**: **TanStack Query (React Query)** for declarative server-state management, caching, and refetching.
--   **API Client**: **Axios** for making HTTP requests to the CoinGecko API.
--   **UI/UX**: `lucide-react` for icons, `react-hot-toast` for notifications, and `react-sparklines` for graph rendering.
+Specific design patterns were intentionally used to solve common problems and ensure the codebase is robust and scalable.
 
----
+1.  **Custom Hook Pattern**
+    -   **Rationale**: To decouple business logic (especially data fetching) from the UI. Components shouldn't know *how* to fetch data, only that they *need* it.
+    -   **Implementation**: All data-fetching logic is encapsulated within custom hooks (e.g., `useMarketData`). Components call these hooks and receive a simple, clean state (`data`, `isLoading`, `isError`). This makes components highly reusable and focused solely on presentation.
 
-## 4. Design Patterns & Rationale
+2.  **Adapter (or Mapper) Pattern**
+    -   **Rationale**: To decouple the application's internal data model from the external API's data structure. This protects the application from changes in the API response.
+    -   **Implementation**: In `src/lib/coingecko.ts`, the `fetchMarketData` function receives raw data from the API and immediately maps it to our internal `Coin` TypeScript interface. If CoinGecko changes a field name, we only need to update the mapping in this one location, and the rest of the application remains unaffected.
 
-1.  **Custom Hook Pattern**:
-    -   **Use Case**: All data fetching is encapsulated in hooks like `useMarketData`.
-    -   **Rationale**: Decouples UI from data-fetching logic, making components cleaner and leveraging React Query's power seamlessly.
-
-2.  **Adapter (Mapper) Pattern**:
-    -   **Use Case**: API service functions map raw API responses to a clean, strongly-typed `Coin` interface.
-    -   **Rationale**: Insulates the app from API changes. If the API response changes, only the adapter needs to be updated.
-
-3.  **Provider Pattern**:
-    -   **Use Case**: `QueryClientProvider` and our custom `ThemeProvider` wrap the entire application.
-    -   **Rationale**: Provides global context for the server cache and theme state, making them accessible throughout the component tree without prop drilling.
+3.  **Provider Pattern**
+    -   **Rationale**: To provide global state or functionality to the entire component tree without "prop drilling".
+    -   **Implementation**: `QueryClientProvider` (from TanStack Query) and our custom `ThemeProvider` wrap the application in `main.tsx`. This gives every component access to the global server cache and the current theme state, respectively.
 
 ---
 
-## 5. Setup and Installation
+## 4. Assumptions, Limitations, and Future Improvements
 
-To run this project locally, follow these steps:
+### Assumptions
+-   The user has a modern browser with JavaScript enabled.
+-   The CoinGecko API is available and its rate limits are sufficient for the scope of this application.
+-   For sorting and filtering highlights, fetching the top 100 coins provides a large enough dataset for meaningful results.
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/Maheeth1/crypto-dashboard.git
-    cd crypto-dashboard
-    ```
+### Limitations
+-   **Real-time Data**: The application currently fetches data on load and periodically in the background (managed by TanStack Query). It does not use WebSockets for real-time, push-based price updates.
+-   **Server-Side Operations**: Search and sorting are performed client-side. For a massive dataset (e.g., thousands of coins), this would become inefficient and would need to be moved to a dedicated backend.
 
-2.  **Install dependencies:**
-    ```bash
-    npm install
-    ```
-
-3.  **Set up environment variables:**
-    -   Get a free API key from [CoinGecko API](https://www.coingecko.com/en/api).
-    -   Create a `.env.local` file in the project root.
-    -   Copy the contents of `.env.example` and add your API key:
-        ```
-        VITE_COINGECKO_API_KEY=your_coingecko_api_key_here
-        VITE_COINGECKO_API_URL=[https://api.coingecko.com/api/v3](https://api.coingecko.com/api/v3)
-        ```
-
-4.  **Run the development server:**
-    ```bash
-    npm run dev
+### Future Improvements
+-   **Real-Time Updates**: Implement WebSockets to stream live price updates for a more dynamic user experience.
+-   **Advanced Charting**: Integrate a dedicated charting library (like Chart.js or Recharts) on a detailed coin view page to show historical price data.
+-   **User Accounts & Watchlist**: Allow users to create accounts and save a personalized watchlist of their favorite cryptocurrencies.
+-   **Testing**: Implement a comprehensive testing suite with Vitest and React Testing Library to cover critical components and utility functions, ensuring long-term code stability.
     ```
     The application will be available at `http://localhost:5173` (or another port if 5173 is busy).
