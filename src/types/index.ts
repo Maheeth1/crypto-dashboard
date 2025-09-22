@@ -10,6 +10,9 @@ export interface Coin {
   marketCap: number;
   volume24h: number;
   athChangePercentage: number;
+  high24h: number;
+  low24h: number; 
+  sparkline: number[];
 }
 
 export interface TrendingCoin {

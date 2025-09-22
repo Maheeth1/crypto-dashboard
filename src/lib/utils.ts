@@ -7,7 +7,11 @@ export const formatCurrency = (value: number, currency: string = 'usd') => {
   }).format(value);
 };
 
-export const formatLargeNumber = (value: number): string => {
+export const formatLargeNumber = (value: number | null | undefined): string => {
+  if (value === null || value === undefined) {
+    return 'N/A'; 
+  }
+
   if (value >= 1e12) {
     return `$${(value / 1e12).toFixed(2)}T`;
   }

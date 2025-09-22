@@ -11,13 +11,13 @@ export const ErrorMessage: React.FC<ErrorMessageProps> = ({
   onRetry,
 }) => {
   return (
-    <div className="flex flex-col items-center justify-center p-8 text-center bg-gray-800 rounded-lg">
-      <AlertTriangle className="w-12 h-12 text-red-500 mb-4" />
-      <p className="text-lg text-red-400 mb-4">{message}</p>
+    <div className="flex flex-col items-center justify-center p-8 text-center bg-card dark:bg-dark-card border border-muted/50 dark:border-dark-muted/50 rounded-lg">
+      <AlertTriangle className="w-12 h-12 text-red-500 dark:text-red-400 mb-4" />
+      <p className="text-lg text-red-400 dark:text-red-300 mb-4">{message}</p>
       {onRetry && (
         <button
           onClick={onRetry}
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+          className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
         >
           Try Again
         </button>

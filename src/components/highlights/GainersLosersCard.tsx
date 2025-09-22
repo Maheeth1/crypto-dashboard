@@ -13,7 +13,7 @@ interface GainersLosersCardProps {
 
 export const GainersLosersCard: React.FC<GainersLosersCardProps> = ({ coins, type, currency, limit = 8 }) => {
   const title = type === 'gainers' ? '🚀 Top Gainers' : '📉 Top Losers';
-  const icon = type === 'gainers' ? <ArrowUpRight className="w-4 h-4 text-green-500" /> : <ArrowDownRight className="w-4 h-4 text-red-500" />;
+  const icon = type === 'gainers' ? <ArrowUpRight className="w-4 h-4 text-green-500 dark:text-green-400" /> : <ArrowDownRight className="w-4 h-4 text-red-500 dark:text-red-400" />;
 
   const sortedCoins = useMemo(() => {
     if (!coins) return [];
@@ -26,7 +26,7 @@ export const GainersLosersCard: React.FC<GainersLosersCardProps> = ({ coins, typ
   }, [coins, type, limit]);
 
   return (
-    <HighlightCard 
+    <HighlightCard
       title={title}
       headers={['Coin', 'Price', '24h %']}
       moreLink="#"
@@ -35,13 +35,13 @@ export const GainersLosersCard: React.FC<GainersLosersCardProps> = ({ coins, typ
         <div key={coin.id} className="grid grid-cols-3 items-center text-sm gap-2">
           <div className="flex items-center gap-2 col-span-1 truncate">
             <img src={coin.image} alt={coin.name} className="w-5 h-5 rounded-full" />
-            <span className="font-bold">{coin.symbol}</span>
+            <span className="font-bold text-foreground dark:text-dark-foreground">{coin.symbol}</span>
           </div>
-          <span className="text-right col-span-1">{formatCurrency(coin.price, currency)}</span>
+          <span className="text-right col-span-1 text-foreground dark:text-dark-foreground">{formatCurrency(coin.price, currency)}</span>
           <div className="flex items-center justify-end gap-1 col-span-1">
             {icon}
-            <span className={type === 'gainers' ? 'text-green-500' : 'text-red-500'}>
-              {coin.priceChangePercentage24h.toFixed(2)}%
+            <span className={type === 'gainers' ? 'text-green-500 dark:text-green-400' : 'text-red-500 dark:text-red-400'}>
+              {(coin.priceChangePercentage24h || 0).toFixed(2)}%
             </span>
           </div>
         </div>

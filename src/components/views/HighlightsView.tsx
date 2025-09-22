@@ -28,9 +28,9 @@ const HighestVolumeCard = ({ coins, currency }: { coins: Coin[] | undefined, cur
          <div key={coin.id} className="grid grid-cols-3 items-center text-sm gap-2">
             <div className="flex items-center gap-2 col-span-1 truncate">
               <img src={coin.image} alt={coin.name} className="w-5 h-5 rounded-full" />
-              <span className="font-bold">{coin.symbol}</span>
+              <span className="font-bold text-foreground dark:text-dark-foreground">{coin.symbol}</span>
             </div>
-            <span className="text-right col-span-2">{formatCurrency(coin.volume24h, currency)}</span>
+            <span className="text-right col-span-2 text-foreground dark:text-dark-foreground">{formatCurrency(coin.volume24h, currency)}</span>
         </div>
       ))}
     </HighlightCard>

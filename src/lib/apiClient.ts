@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-// Access environment variables using import.meta.env
 const baseURL = import.meta.env.VITE_COINGECKO_API_URL;
 const apiKey = import.meta.env.VITE_COINGECKO_API_KEY;
 

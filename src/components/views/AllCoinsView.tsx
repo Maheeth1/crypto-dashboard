@@ -42,9 +42,9 @@ export const AllCoinsView: React.FC<AllCoinsViewProps> = ({ currency }) => {
       </section>
 
       {/* Main Table Section */}
-      <section className="bg-gray-800 p-6 rounded-lg">
+      <section className="bg-card dark:bg-dark-card p-6 rounded-lg">
         <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
-          <h2 className="text-2xl font-bold">All Coins</h2>
+          <h2 className="text-2xl font-bold text-foreground dark:text-dark-foreground">All Coins</h2>
           <SearchInput value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
         </div>
 
