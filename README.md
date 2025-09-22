@@ -1,69 +1,116 @@
-# React + TypeScript + Vite
+# CryptoDash: A Production-Like Cryptocurrency Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**CryptoDash** is a responsive, feature-rich web application that provides live cryptocurrency market data, built as a response to a take-home development assignment. It features a detailed "All Coins" overview with advanced data points and a comprehensive "Highlights" section. The project emphasizes clean code, modern design patterns, and a polished user experience with features like theme switching and client-side routing.
 
-Currently, two official plugins are available:
+**Live Application Link:** [**Add your Vercel deployment link here**]
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## Final Application Screenshots
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+#### All Coins View (with Dark Mode)
+![Screenshot of the All Coins View](./public/screenshots/all-coins-view-dark.png)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+#### Highlights View (with Light Mode)
+![Screenshot of the Highlights View](./public/screenshots/highlights-view-light.png)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 1. Assignment Overview & Goal
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+This project was built to fulfill the requirements of the development assignment provided. The primary goal was to build a small, production-like crypto dashboard that fetches live market data from the CoinGecko API.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+> #### **Original Assignment Goal:**
+>
+> *Build a small, production-like crypto dashboard that fetches live market data from the CoinGecko API and displays:*
+>
+> -   *All coins overview*
+> -   *A Highlights section*
+>
+> *The assignment tests your ability to design, implement, and ship a clean, maintainable, and well-documented codebase with appropriate use of design patterns.*
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+
+## 2. Features Implemented
+
+This project successfully implements all core requirements and includes additional enhancements for a superior user experience.
+
+-   **Two Main Views**: A tabbed interface to switch between the "All Coins" and "Highlights" views using **React Router**.
+-   **Enhanced All Coins Table**:
+    -   Displays Rank, Name, Price, Market Cap, and Volume.
+    -   **Advanced Data**: Includes columns for **1h, 24h, 7d, and 30d** price changes.
+    -   **7-Day Sparkline Graph**: A visual representation of the weekly price trend for each coin.
+-   **Comprehensive Highlights Section**:
+    -   Summary cards on the main page for a quick overview.
+    -   A dedicated highlights page with detailed lists for:
+        -   🔥 Trending Coins
+        -   🚀 Top Gainers (24h)
+        -   📉 Top Losers (24h)
+        -   🥤 Highest Volume
+        -   ✨ Newest Coins (by market cap rank)
+        -   🎢 Biggest Drop from All-Time High
+    -   **"More" Functionality**: Each highlight card links to a detailed, sorted view for that category.
+-   **Light/Dark Mode Theming**: Full application theme switching with a toggle in the header, with user preference saved.
+-   **Dynamic Currency Switching**: Instantly change the display currency for all monetary values.
+-   **Robust UX States**: Clean loading skeletons, clear error messages with a retry option, and empty state handling.
+-   **Responsive Design**: A seamless experience across desktop, tablet, and mobile devices.
+
+---
+
+## 3. Tech Stack & Architecture
+
+-   **Framework**: **React 18** with **Vite** for a fast and modern development experience.
+-   **Language**: **TypeScript** for robust type safety.
+-   **Routing**: **React Router DOM** for client-side navigation.
+-   **Styling**: **Tailwind CSS** with a class-based strategy for theming.
+-   **Data Fetching & State Management**: **TanStack Query (React Query)** for declarative server-state management, caching, and refetching.
+-   **API Client**: **Axios** for making HTTP requests to the CoinGecko API.
+-   **UI/UX**: `lucide-react` for icons, `react-hot-toast` for notifications, and `react-sparklines` for graph rendering.
+
+---
+
+## 4. Design Patterns & Rationale
+
+1.  **Custom Hook Pattern**:
+    -   **Use Case**: All data fetching is encapsulated in hooks like `useMarketData`.
+    -   **Rationale**: Decouples UI from data-fetching logic, making components cleaner and leveraging React Query's power seamlessly.
+
+2.  **Adapter (Mapper) Pattern**:
+    -   **Use Case**: API service functions map raw API responses to a clean, strongly-typed `Coin` interface.
+    -   **Rationale**: Insulates the app from API changes. If the API response changes, only the adapter needs to be updated.
+
+3.  **Provider Pattern**:
+    -   **Use Case**: `QueryClientProvider` and our custom `ThemeProvider` wrap the entire application.
+    -   **Rationale**: Provides global context for the server cache and theme state, making them accessible throughout the component tree without prop drilling.
+
+---
+
+## 5. Setup and Installation
+
+To run this project locally, follow these steps:
+
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git](https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git)
+    cd YOUR_REPO_NAME
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+
+3.  **Set up environment variables:**
+    -   Get a free API key from [CoinGecko API](https://www.coingecko.com/en/api).
+    -   Create a `.env.local` file in the project root.
+    -   Copy the contents of `.env.example` and add your API key:
+        ```
+        VITE_COINGECKO_API_KEY=your_coingecko_api_key_here
+        VITE_COINGECKO_API_URL=[https://api.coingecko.com/api/v3](https://api.coingecko.com/api/v3)
+        ```
+
+4.  **Run the development server:**
+    ```bash
+    npm run dev
+    ```
+    The application will be available at `http://localhost:5173` (or another port if 5173 is busy).
