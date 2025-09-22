@@ -74,7 +74,7 @@ The project is structured into logical folders (`components`, `hooks`, `lib`, `c
 
 ---
 
-## 2. Features Implemented
+## 3. Features Implemented
 
 This project successfully implements all core requirements and includes additional enhancements for a superior user experience.
 
@@ -100,7 +100,7 @@ This project successfully implements all core requirements and includes addition
 
 ---
 
-## 3. Design Patterns Used and Rationale
+## 4. Design Patterns Used and Rationale
 
 Specific design patterns were intentionally used to solve common problems and ensure the codebase is robust and scalable.
 
@@ -118,7 +118,7 @@ Specific design patterns were intentionally used to solve common problems and en
 
 ---
 
-## 4. Assumptions, Limitations, and Future Improvements
+## 5. Assumptions, Limitations, and Future Improvements
 
 ### Assumptions
 -   The user has a modern browser with JavaScript enabled.
@@ -134,5 +134,3 @@ Specific design patterns were intentionally used to solve common problems and en
 -   **Advanced Charting**: Integrate a dedicated charting library (like Chart.js or Recharts) on a detailed coin view page to show historical price data.
 -   **User Accounts & Watchlist**: Allow users to create accounts and save a personalized watchlist of their favorite cryptocurrencies.
 -   **Testing**: Implement a comprehensive testing suite with Vitest and React Testing Library to cover critical components and utility functions, ensuring long-term code stability.
-    ```
-    The application will be available at `http://localhost:5173` (or another port if 5173 is busy).
