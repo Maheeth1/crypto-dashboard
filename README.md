@@ -2,7 +2,7 @@
 
 **CryptoDash** is a responsive, feature-rich web application that provides live cryptocurrency market data, built as a response to a take-home development assignment. It features a detailed "All Coins" overview with advanced data points and a comprehensive "Highlights" section. The project emphasizes clean code, modern design patterns, and a polished user experience with features like theme switching and client-side routing.
 
-**Live Application Link:** [**https://crypto-dashboard-six-eta.vercel.app/**]
+**Live Application Link:** **https://crypto-dashboard-six-eta.vercel.app/**
 
 ---
 
@@ -47,7 +47,7 @@ To get a local copy up and running, please follow these simple steps.
         ```env
         # .env.local
         VITE_COINGECKO_API_KEY=your_coingecko_api_key_here
-        VITE_COINGECKO_API_URL=[https://api.coingecko.com/api/v3](https://api.coingecko.com/api/v3)
+        VITE_COINGECKO_API_URL=https://api.coingecko.com/api/v3
         ```
     > **Note:** The `.env.local` file is listed in `.gitignore` and will never be committed to the repository.
 
