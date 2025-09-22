@@ -12,13 +12,10 @@ interface HeaderProps {
 
 const currencies = ['usd', 'eur', 'jpy', 'gbp', 'inr'];
 
-export const Header: React.FC<HeaderProps> = ({ activeView, setActiveView, currency, setCurrency }) => {
+export const Header: React.FC<HeaderProps> = ({  currency, setCurrency }) => {
   const { theme, toggleTheme } = useTheme();
 
-  const buttonClass = (view: string) =>
-    `px-4 py-2 rounded-md font-semibold transition-colors ${
-      activeView === view ? 'bg-primary text-primary-foreground' : 'bg-card hover:bg-card/80 dark:bg-dark-card dark:hover:bg-dark-card/80'
-    }`;
+  
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     `px-4 py-2 rounded-md font-semibold transition-colors ${

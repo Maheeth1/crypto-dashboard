@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const Footer = () => {
   return (
     <footer className="bg-card dark:bg-dark-card p-4 border-t border-muted/50 dark:border-dark-muted/50 mt-auto">
