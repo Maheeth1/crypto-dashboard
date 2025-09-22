@@ -29,7 +29,7 @@ To get a local copy up and running, please follow these simple steps.
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/Maheeth1/crypto-dashboard.git](https://github.com/Maheeth1/crypto-dashboard.git)
+    git clone https://github.com/Maheeth1/crypto-dashboard.git
     cd crypto-dashboard
     ```
 
